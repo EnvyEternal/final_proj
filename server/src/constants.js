@@ -28,4 +28,7 @@ module.exports = {
   NOTIFICATION_CHANGE_OFFER_STATUS: 'changeOfferStatus',
   NEW_MESSAGE: 'newMessage',
   CHANGE_BLOCK_STATUS: 'CHANGE_BLOCK_STATUS',
+  MODERATOR: 'moderator',
+  MAIL_MODERATOR: 'squadhelp48@gmail.com',
+  MAIL_MODERATOR_PASSWORD: 'n+Y"a9nZ7c',
 };

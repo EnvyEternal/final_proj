@@ -13,7 +13,7 @@ import {
   getContestByIdSaga,
   downloadContestFileSaga,
 } from './contestsSagas';
-import { changeMarkSaga, setOfferStatusSaga, addOfferSaga } from './offerSagas';
+import {changeMarkSaga, setOfferStatusSaga, addOfferSaga, moderatorOffersSaga} from './offerSagas';
 import {
   previewSaga,
   getDialog,

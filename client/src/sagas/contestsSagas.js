@@ -63,3 +63,4 @@ export function* downloadContestFileSaga(action) {
     yield put({ type: ACTION.DOWNLOAD_CONTEST_FILE_ERROR, error: e.response });
   }
 }
+
