@@ -33,8 +33,8 @@ const Moderator = (props) => {
             setOffersForModerator(props.offers).catch(e => console.log(e))
         }, 1000)
 
-    useEffect(() => {
-        get().catch(e => console.log(e))
+    useEffect(async () => {
+        await get().catch(e => console.log(e))
     }, [page, reload]);
 
     const mapOffer = (i, index) => {

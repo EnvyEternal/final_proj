@@ -274,12 +274,12 @@ module.exports.getContests = (req, res, next) => {
     });
 };
 
-module.exports.getOffers = (req, res, next) => {
-  console.log(req.params.id)
+module.exports.getOffers = async (req, res, next) => {
   try{
-    db.Offers.findAll({limit : 5, offset: (req.params.id - 1)*5,where: {status:'modereted'}}).then(offers => {
-        res.send(offers);
-    })
+    const data = await db.Offers.findAll({limit : 5, offset: (req.params.id - 1)*5,where: {status:'modereted'}})
+    if(data){
+        res.send(data)
+    }
   }catch(err){
     next(new ServerError())
   }
