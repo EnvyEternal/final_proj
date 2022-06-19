@@ -320,26 +320,3 @@ module.exports.rejectOffer = async (req, res, next) => {
     }
 }
 
-//db.Offers.update({status: CONTEST_STATUS_PENDING}, {where: {id: req.body.data}}).then(() => {
-//         res.send(offer);
-//       })
-//      db.Offers.findOne({where: {id: req.body.data}}).then((offer) => {
-//         db.Users.findOne({where: {id: offer.userId}, attributes : ['firstName', 'lastName', 'email']}).then((user) => {
-//           //send.resultEmailAccept(user, offer.text).catch(err => {
-//            // next(new ServerError())
-//          // })
-//           console.log(user)
-//
-//         })
-
-// db.Offers.update({status:'rejected'},{where:{id:req.body.data}}).then(offer => {
-//             res.send(offer);
-//         })
-//       db.Offers.findOne({where: {id: req.body.data}}).then((offer) => {
-//             db.Users.findOne({where: {id: offer.userId}, attributes : ['firstName', 'lastName', 'email']}).then((user) => {
-//               send.resultEmailReject(user, offer.text).catch(err => {
-//                 next(new ServerError())
-//               })
-//             })
-//           }
-//         )
