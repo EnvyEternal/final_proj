@@ -285,38 +285,61 @@ module.exports.getOffers = (req, res, next) => {
   }
 }
 
-module.exports.acceptOffer = (req, res, next) => {
+module.exports.acceptOffer = async(req, res, next) => {
     try {
-      db.Offers.update({status: CONTEST_STATUS_PENDING}, {where: {id: req.body.data}}).then(() => {
-        res.send(offer);
-      })
-      db.Offers.findOne({where: {id: req.body.data}}).then((offer) => {
-        db.Users.findOne({where: {id: offer.userId}, attributes : ['firstName', 'lastName', 'email']}).then((user) => {
-          send.resultEmailAccept(user, offer.text).catch(err => {
-            next(new ServerError())
-          })
-        })
+        const offer = await db.Offers.update({status: CONTEST_STATUS_PENDING}, {where: {id: req.body.data}})
+      if(offer){
+        const data = await db.Offers.findOne({where: {id: req.body.data}})
+        if(data){
+         const dataForEmail = await db.Users.findOne({where: {id: data.userId}, attributes : ['firstName', 'lastName', 'email']})
+          if(dataForEmail){
+           await send.resultEmailAccept(data, dataForEmail.text)
+          }
+        }
       }
-        )
+
     }catch(err){
         next(new ServerError())
     }
 }
 
-module.exports.rejectOffer = (req, res, next) => {
+module.exports.rejectOffer = async (req, res, next) => {
     try{
-        db.Offers.update({status:'rejected'},{where:{id:req.body.data}}).then(offer => {
-            res.send(offer);
-        })
-      db.Offers.findOne({where: {id: req.body.data}}).then((offer) => {
-            db.Users.findOne({where: {id: offer.userId}, attributes : ['firstName', 'lastName', 'email']}).then((user) => {
-              send.resultEmailReject(user, offer.text).catch(err => {
-                next(new ServerError())
-              })
-            })
+      const offer = await db.Offers.update({status: CONSTANTS.CONTEST_STATUS_REJECTED}, {where: {id: req.body.data}})
+      if(offer){
+        const data = await db.Offers.findOne({where: {id: req.body.data}})
+        if(data){
+          const dataForEmail = await db.Users.findOne({where: {id: data.userId}, attributes : ['firstName', 'lastName', 'email']})
+          if(dataForEmail){
+            await send.resultEmailReject(data, dataForEmail.text)
           }
-        )
+        }
+      }
     }catch(err){
         next(new ServerError())
     }
 }
+
+//db.Offers.update({status: CONTEST_STATUS_PENDING}, {where: {id: req.body.data}}).then(() => {
+//         res.send(offer);
+//       })
+//      db.Offers.findOne({where: {id: req.body.data}}).then((offer) => {
+//         db.Users.findOne({where: {id: offer.userId}, attributes : ['firstName', 'lastName', 'email']}).then((user) => {
+//           //send.resultEmailAccept(user, offer.text).catch(err => {
+//            // next(new ServerError())
+//          // })
+//           console.log(user)
+//
+//         })
+
+// db.Offers.update({status:'rejected'},{where:{id:req.body.data}}).then(offer => {
+//             res.send(offer);
+//         })
+//       db.Offers.findOne({where: {id: req.body.data}}).then((offer) => {
+//             db.Users.findOne({where: {id: offer.userId}, attributes : ['firstName', 'lastName', 'email']}).then((user) => {
+//               send.resultEmailReject(user, offer.text).catch(err => {
+//                 next(new ServerError())
+//               })
+//             })
+//           }
+//         )

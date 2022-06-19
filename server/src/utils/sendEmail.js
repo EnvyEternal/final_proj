@@ -29,4 +29,3 @@ module.exports.resultEmailReject = async(data, offer) =>{
         text: `Hello dear ${user.firstName} ${user.lastName} your offer ${offer} was moderated and rejected by moderator, good luck next time`,
     })}
 
-
