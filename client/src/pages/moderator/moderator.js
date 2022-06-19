@@ -30,11 +30,11 @@ const Moderator = (props) => {
     }
 
     setTimeout(() => {
-            setOffersForModerator(props.offers).catch(e => console.log(e))
+            setOffersForModerator(props.offers)
         }, 1000)
 
     useEffect(async () => {
-        await get().catch(e => console.log(e))
+        get()
     }, [page, reload]);
 
     const mapOffer = (i, index) => {
@@ -45,6 +45,7 @@ const Moderator = (props) => {
             )
             if(result) {
                 setReload(!reload)
+                get()
                 await acceptOffer(id);
             }
         }
@@ -54,6 +55,7 @@ const Moderator = (props) => {
             )
             if(result) {
                 setReload(!reload)
+                get()
                 await rejectOffer(id);
             }
         }
