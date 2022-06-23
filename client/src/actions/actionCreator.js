@@ -55,6 +55,12 @@ export const getContestsForCreative = (data) => ({
   data,
 });
 
+export const getOffersForModerator = (data) => ({
+    type: ACTION.GET_OFFERS_FOR_MODERATOR,
+    data,
+
+});
+
 export const getContestsForCustomer = (data) => ({
   type: ACTION.GET_CONTESTS_FOR_CUSTOMER,
   data,

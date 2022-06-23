@@ -27,17 +27,13 @@ export function* sendMessage(action) {
     const { data } = yield restController.newMessage(action.data);
     const { messagesPreview } = yield select((state) => state.chatStore);
     let isNew = true;
-    messagesPreview.forEach((preview) => {
-      if (isEqual(preview.participants, data.message.participants)) {
-        preview.text = data.message.body;
-        preview.sender = data.message.sender;
-        preview.createAt = data.message.createdAt;
-        isNew = false;
-      }
-    });
-    if (isNew) {
-      messagesPreview.push(data.preview);
-    }
+      messagesPreview.forEach((preview) => {
+        if (isEqual(preview.participants, data.message.participants)) {
+          preview.text = data.message.body;
+          preview.sender = data.message.sender;
+          preview.createAt = data.message.createdAt;
+        }
+      });
     yield put({
       type: ACTION.SEND_MESSAGE,
       data: {

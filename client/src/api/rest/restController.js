@@ -9,7 +9,7 @@ export const setOfferStatus = (data) => http.post('setOfferStatus', data);
 export const downloadContestFile = (data) => http.get(`downloadFile/${data.fileName}`);
 export const payMent = (data) => http.post('pay', data.formData);
 export const changeMark = (data) => http.post('changeMark', data);
-export const getPreviewChat = () => http.post('getPreview');
+export const getPreviewChat = () => http.post('getPreview')
 export const getDialog = (data) => http.post('getChat', data);
 export const dataForContest = (data) => http.post('dataForContest', data);
 export const cashOut = (data) => http.post('cashout', data);
@@ -34,6 +34,11 @@ export const getActiveContests = ({
 }) => http.post('getAllContests', {
   offset, limit, typeIndex, contestId, industry, awardSort, ownEntries,
 });
+
+export const getForModeration = (page) => http.get(`getOfferForModderation/${page}`);
+
+export const acceptOffer = (data) => http.post('acceptOffer', {data});
+export const rejectOffer = (data) => http.post('rejectOffer', {data});
 
 export const getContestById = (data) => http.get('getContestById', {
   headers: {

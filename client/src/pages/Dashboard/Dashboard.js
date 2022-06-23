@@ -4,6 +4,7 @@ import CONSTANTS from '../../constants';
 import CustomerDashboard from '../../components/CustomerDashboard/CustomerDashboard';
 import CreatorDashboard from '../../components/CreatorDashboard/CreatorDashboard';
 import Header from '../../components/Header/Header';
+import Moderator from "../moderator/moderator";
 
 const Dashboard = (props) => {
   const { role, history } = props;
@@ -12,8 +13,11 @@ const Dashboard = (props) => {
       <Header />
       {
                 role === CONSTANTS.CUSTOMER
-                  ? <CustomerDashboard history={history} match={props.match} />
-                  : <CreatorDashboard history={history} match={props.match} />
+                    ? <CustomerDashboard history={history} match={props.match} />
+                    :
+                    role === CONSTANTS.MODERATOR
+                        ? <Moderator history={history} match={props.match} />
+                        : <CreatorDashboard history={history} match={props.match} />
             }
     </div>
   );
