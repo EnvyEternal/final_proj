@@ -1,0 +1,1 @@
+db.messages.aggregate([{$match: {body: "locomotive" }},{$count: "Count"}]);
