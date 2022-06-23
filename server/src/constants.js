@@ -12,6 +12,8 @@ module.exports = {
   CONTEST_STATUS_ACTIVE: 'active',
   CONTEST_STATUS_FINISHED: 'finished',
   CONTEST_STATUS_PENDING: 'pending',
+  CONTEST_STATUS_REJECTED: 'rejected',
+  CONTEST_STATUS_MODERATION: 'moderated',
   CONTESTS_DEFAULT_DIR: 'public/contestFiles/',
   NAME_CONTEST: 'name',
   LOGO_CONTEST: 'logo',
@@ -28,4 +30,7 @@ module.exports = {
   NOTIFICATION_CHANGE_OFFER_STATUS: 'changeOfferStatus',
   NEW_MESSAGE: 'newMessage',
   CHANGE_BLOCK_STATUS: 'CHANGE_BLOCK_STATUS',
+  MODERATOR: 'moderator',
+  MAIL_MODERATOR: 'squadhelp48@gmail.com',
+  MAIL_MODERATOR_PASSWORD: 'n+Y"a9nZ7c',
 };

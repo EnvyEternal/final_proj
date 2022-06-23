@@ -2,7 +2,7 @@ const cron = require('node-cron');
 const fs = require("fs");
 
 
-module.exports.cronDayErrorLogger = cron.schedule('* * * * *', () => {
+module.exports.cronDayErrorLogger = cron.schedule('0 8 * * *', () => {
         const path = require('path');
         const date = new Date().getTime();
         const pathToFile = path.join(__dirname, '../../logOfError', 'errorLogger.json');

@@ -5,12 +5,14 @@ const userQueries = require('./queries/userQueries');
 const controller = require('../socketInit');
 const UtilFunctions = require('../utils/functions');
 const CONSTANTS = require('../constants');
+const {where} = require("sequelize");
+const send = require('../utils/sendEmail');
+const {CONTEST_STATUS_PENDING} = require("../constants");
 
 module.exports.dataForContest = async (req, res, next) => {
   const response = {};
   try {
     const { body: { characteristic1, characteristic2 } } = req;
-    console.log(req.body, characteristic1, characteristic2);
     const types = [characteristic1, characteristic2, 'industry'].filter(Boolean);
 
     const characteristics = await db.Selects.findAll({
@@ -61,7 +63,7 @@ module.exports.getContestById = async (req, res, next) => {
           required: false,
           where: req.tokenData.role === CONSTANTS.CREATOR
             ? { userId: req.tokenData.userId }
-            : {},
+            : {status: CONSTANTS.OFFER_STATUS_PENDING},
           attributes: { exclude: ['userId', 'contestId'] },
           include: [
             {
@@ -271,3 +273,50 @@ module.exports.getContests = (req, res, next) => {
       next(new ServerError());
     });
 };
+
+module.exports.getOffers = async (req, res, next) => {
+  try{
+    const data = await db.Offers.findAll({limit : 5, offset: (req.params.id - 1)*5,where: {status:'modereted'}})
+    if(data){
+        res.send(data)
+    }
+  }catch(err){
+    next(new ServerError())
+  }
+}
+
+module.exports.acceptOffer = async(req, res, next) => {
+    try {
+        const offer = await db.Offers.update({status: CONTEST_STATUS_PENDING}, {where: {id: req.body.data}})
+      if(offer){
+        const data = await db.Offers.findOne({where: {id: req.body.data}})
+        if(data){
+         const dataForEmail = await db.Users.findOne({where: {id: data.userId}, attributes : ['firstName', 'lastName', 'email']})
+          if(dataForEmail){
+           await send.resultEmailAccept(data, dataForEmail.text)
+          }
+        }
+      }
+
+    }catch(err){
+        next(new ServerError())
+    }
+}
+
+module.exports.rejectOffer = async (req, res, next) => {
+    try{
+      const offer = await db.Offers.update({status: CONSTANTS.CONTEST_STATUS_REJECTED}, {where: {id: req.body.data}})
+      if(offer){
+        const data = await db.Offers.findOne({where: {id: req.body.data}})
+        if(data){
+          const dataForEmail = await db.Users.findOne({where: {id: data.userId}, attributes : ['firstName', 'lastName', 'email']})
+          if(dataForEmail){
+            await send.resultEmailReject(data, dataForEmail.text)
+          }
+        }
+      }
+    }catch(err){
+        next(new ServerError())
+    }
+}
+

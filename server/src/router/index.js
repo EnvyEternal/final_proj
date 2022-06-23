@@ -178,4 +178,25 @@ router.post(
   chatController.getCatalogs,
 );
 
+router.get(
+    '/getOfferForModderation/:id',
+    checkToken.checkToken,
+    basicMiddlewares.onlyForModerator,
+    contestController.getOffers,
+);
+
+router.post(
+    '/rejectOffer',
+    checkToken.checkToken,
+    basicMiddlewares.onlyForModerator,
+    contestController.rejectOffer,
+);
+
+router.post(
+    '/acceptOffer',
+    checkToken.checkToken,
+    basicMiddlewares.onlyForModerator,
+    contestController.acceptOffer,
+)
+
 module.exports = router;

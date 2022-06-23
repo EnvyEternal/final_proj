@@ -32,13 +32,6 @@ services:
       - /server/node_modules
 
 
-  mongo-dev:
-    image: mongo:4.4.6-bionic
-    ports:
-      - "27017:27017"
-
-
-
   db-dev:
     image: postgres:13.2-alpine
     environment:
