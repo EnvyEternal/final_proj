@@ -8,7 +8,7 @@ module.exports = {
       lastName: 'Moderator',
       displayName: 'Moderator',
       password: bcrypt.hashSync('Admin12345', 10),
-      email: 'vladultimate@gmail.com',
+      email: 'moderator@gmail.com',
       role: 'moderator',
     }];
     return queryInterface.bulkInsert('Users', fields, {});
